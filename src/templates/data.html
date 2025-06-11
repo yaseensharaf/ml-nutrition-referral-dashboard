@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="{{ dark_mode }}">
+
+  <head>
+    <title>Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css') }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  </head>
+  
+  <body>
+    <script src="main.js"></script>
+    <div class="app-container">
+      <div class="app-header">
+        <div class="app-header-left">
+          <span class="app-icon"></span>
+          <p class="app-name">DASHBOARD</p>
+        </div>
+        <div class="app-header-right">
+          <button class="mode-switch" title="Switch Theme">
+            <svg
+              class="moon"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <defs></defs>
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="app-content">
+        <div class="app-sidebar">
+          <a href="index.html" class="app-sidebar-link">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-home"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </a>
+          <a href="graphs.html" class="app-sidebar-link">
+            <svg
+              class="link-icon"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              class="feather feather-pie-chart"
+              viewBox="0 0 24 24"
+            >
+              <defs />
+              <path
+                d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z"
+              />
+            </svg>
+          </a>
+
+          <a href="upload.html" class="app-sidebar-link">
+            <svg  class="link-icon"
+            width="24"
+            height="24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.3"
+            viewBox="0 0 16 16"
+            >
+              <defs />
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+            </svg>
+          </a>
+
+          <a href="help.html" class="app-sidebar-link">
+            <svg  class="link-icon"
+            width="24"
+            height="24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.3"
+            viewBox="0 0 16 16"
+            >
+              <defs />
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+              <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+            </svg>
+            </svg>
+          </a>
+          
+        </div>
+        <div class="projects-section">
+          <div class="projects-section-header">
+            <p>DATA</p>
+            <p class="time">{{ today }}</p>
+          </div>
+
+          {% if data %}
+          <div class = "data-container">
+                  {% for key, value in data[0].items() %}
+                      <p class ="data-text">{{ key }}: {{ value }}</p>                   
+                  {% endfor %}
+          {% else %}
+              <p class = "data-text">No data found for the provided encounter ID.</p>
+          {% endif %}
+          <button class="btn" id="export-pdf">Export Data to PDF</button>
+          </div>
+            <div class="view-actions">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script> 
+      
+    <script>
+      document.getElementById('export-pdf').addEventListener('click', function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+    
+        // Select the elements containing the data you want to print
+        const dataContainer = document.querySelector('.data-container').innerText;
+    
+        // Splitting the text by lines to add them to the document
+        const lines = dataContainer.split('\n');
+        let yPos = 10;
+        lines.forEach(line => {
+            doc.text(line, 10, yPos);
+            yPos += 10;
+        });
+    
+        // Save the PDF
+        doc.save('exported-data.pdf');
+    });
+    </script> 
+  </body>
+</html>

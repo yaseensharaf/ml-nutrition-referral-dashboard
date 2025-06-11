@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="{{ dark_mode }}">
+
+  <head>
+    <title>Feeding Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css') }}" />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="app-header">
+        <div class="app-header-left">
+          <span class="app-icon"></span>
+          <p class="app-name">DASHBOARD</p>
+        </div>
+        <div class="app-header-right">
+          <button class="mode-switch" title="Switch Theme">
+            <svg
+              class="moon"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <defs></defs>
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="app-content">
+        <div class="app-sidebar">
+          <a href="index.html" class="app-sidebar-link active">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-home"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </a>
+          <a href="graphs.html" class="app-sidebar-link">
+            <svg
+              class="link-icon"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              class="feather feather-pie-chart"
+              viewBox="0 0 24 24"
+            >
+              <defs />
+              <path
+                d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z"
+              />
+            </svg>
+          </a>
+
+          <a href="upload.html" class="app-sidebar-link">
+            <svg  class="link-icon"
+            width="24"
+            height="24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.3"
+            viewBox="0 0 16 16"
+            >
+              <defs />
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+            </svg>
+          </a>
+          <a href="help.html" class="app-sidebar-link">
+            <svg  class="link-icon"
+            width="24"
+            height="24"
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.3"
+            viewBox="0 0 16 16"
+            >
+              <defs />
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+              <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/>
+            </svg>
+            </svg>
+          </a>
+        </div>
+        <div class="projects-section">
+          <div class="projects-section-header">
+            <p>HOME</p>
+            <p class="time">{{ today }}</p>
+          </div>
+          <div class="projects-section-line">
+            <div class="projects-status">
+
+              <div class="item-status">
+                <span class="status-number">{{ sum }}</span>
+                <span class="status-type">Current Patients</span>
+              </div>
+              <div class="item-status">
+                <span class="status-number">{{ count }}</span>
+                <span class="status-type">Need Referral</span>
+              </div>
+              <div class="projects-section-header">
+              <div class="multi-range-slider">
+                <input type="range" id="lower" class="lower" min="0" max="100" value="0" oninput="updateLowerValue(this.value);">
+                <input type="range" id="upper" class="upper" min="0" max="100" value="100" oninput="updateUpperValue(this.value);">
+                <div class="slider-labels">
+                  <p id="lower-label" style="font-size: 15px;">0%</p>
+                  <p id="upper-label" style="font-size: 15px;">100%</p>
+                </div>
+              </div>
+              <p style="font-size: 15px; margin-left: 20px;">Referral?</p>
+              <select class="updateAll" id="referral" style="margin-left: 7.5px">
+                <option selected>None</option>
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+              </select>
+              <button name="updateAll" id="updateAll" class="updateAll" style="margin-left: 20px;">Update All</button>
+            </div>
+            </div>
+            <div class="view-actions">
+              <button class="view-btn list-view" title="List View">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-list"
+                >
+                  <line x1="8" y1="6" x2="21" y2="6" />
+                  <line x1="8" y1="12" x2="21" y2="12" />
+                  <line x1="8" y1="18" x2="21" y2="18" />
+                  <line x1="3" y1="6" x2="3.01" y2="6" />
+                  <line x1="3" y1="12" x2="3.01" y2="12" />
+                  <line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+              </button>
+              <button class="view-btn grid-view active" title="Grid View">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-grid"
+                >
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="project-boxes jsGridView">
+            {% for result in results %}
+            <div class="project-box-wrapper">
+              <div class="project-box" style="background-color: LightGray">
+                <div class="project-box-header">
+                  <div class="more-wrapper">
+                    <button class="project-btn-more">
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="5" r="1" />
+                        <circle cx="12" cy="19" r="1" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="project-box-content-header">
+                  <p class="box-content-header">Client ID {{ result.encounter_id }}</p>
+                  <p class="box-content-subheader">Client ID {{ result.encounter_id }}</p>
+                </div>
+                <div class="box-progress-wrapper">
+                  <p class="box-progress-header">Client ID {{ result.encounter_id }}</p>
+                  <div class="box-progress-bar">
+                    <span
+                      class="box-progress"
+                      style="width: {{ result.referral_probability }}%; background-color: {{ result.color }}"
+                    ></span>
+                  </div>
+                  <p class="box-progress-percentage">{{ result.referral_probability }}%</p>
+                  <table>
+                    <tr>
+                      <th class="box-progress-percentage" style = "text-align: center;">patient_number</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">encounter_id</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">end_tidal_co2</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">feed_vol</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">feed_vol_adm</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">fio2</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">fio2_ratio</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">insp_time</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">oxygen_flow_rate</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">peep</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">pip</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">resp_rate</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">sip</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">tidal_vol</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">tidal_vol_actual</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">tidal_vol_kg </th>
+                      <th class="box-progress-percentage" style = "text-align: center;">tidal_vol_spon</th>
+                      <th class="box-progress-percentage" style = "text-align: center;">bmi</th>
+                    </tr>
+                    <tr>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.patient_number }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.encounter_id }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.end_tidal_co2 }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.feed_vol }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.feed_vol_adm }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.fio2 }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.fio2_ratio }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.insp_time }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.oxygen_flow_rate }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.peep }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.pip }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.resp_rate }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.sip }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.tidal_vol }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.tidal_vol_actual }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.tidal_vol_kg }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.tidal_vol_spon }}</td>
+                      <td class="box-progress-percentage" style = "text-align: center;">{{ result.bmi }}</td> 
+                    </tr>
+                  </table>
+                  <br>
+                </div>
+                <div class="project-box-footer">
+                  <div class="participants">
+                    <p class = "Referral" style = "color: {{ result.color }};">
+                    Needs Referral: {{ result.needs_referral }}
+                    <a href="data.html?encounterId={{ result.encounter_id }}">Show Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <script src="{{ url_for('static', filename='js/main.js') }}"></script> 
+      <script>
+        function updateAllButton() {
+          document.getElementById('updateAll').onclick = function() {
+              // Capture values from the input fields
+              var lowerVal = parseInt(document.getElementById('lower').value);
+              var upperVal = parseInt(document.getElementById('upper').value);
+              var referral = document.getElementById('referral').value; // Assuming 'referral' is a text input or similar
+      
+              // Send data to Flask server via POST request
+              fetch('/updateAll', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({lower: lowerVal, upper: upperVal, referral: referral}),
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('Success:', data);
+                  // Ask the user if they want to refresh the page
+                  if (confirm("Are you sure you want to filter the data?")) {
+                      // If the user clicks "OK", refresh the page
+                      window.location.reload();
+                  }
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+              
+          }
+      }
+      
+      updateAllButton();
+
+      </script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+  var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+  socket.on('data_updated', function(data) {
+    console.log('Data updated', data);
+  });
+</script>
+  </body>
+</html>
